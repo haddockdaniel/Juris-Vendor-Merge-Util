@@ -103,14 +103,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="JPS - Vendor Merge.exe" size="5239808">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="JPS - Vendor Merge.exe" size="5240320">
       <assemblyIdentity name="JPS - Vendor Merge" version="2.71.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>zlvVoaIwQRzhkzwQvMNrvQbMsEs=</dsig:DigestValue>
+        <dsig:DigestValue>L5tbcvO5v1Zy/mrosrMxAzqYLUU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

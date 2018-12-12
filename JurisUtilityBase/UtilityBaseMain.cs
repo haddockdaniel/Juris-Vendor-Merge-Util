@@ -167,22 +167,26 @@ namespace JurisUtilityBase
                                 "vendor: " + venKeep + ". Vendor: " + venDelete + " will be deleted. Continue?", "Confirmation" ,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (rs == System.Windows.Forms.DialogResult.Yes)
                 {
-                    //get ID for kept vendor
-                    string SQL = "select VenSysNbr from vendor where VenCode ='" + venKeep + "'";
                     int venKeepID = 0;
                     int venDeleteID = 0;
-                    DataSet ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
-                    if (ds1.Tables[0].Rows.Count > 0)
-                        venKeepID = int.Parse(ds1.Tables[0].Rows[0][0].ToString());
+                    DataSet ds1 = new DataSet();
+                    String SQL = "";
+                        //get ID for kept vendor
+                        SQL = "select VenSysNbr from vendor where VenCode ='" + venKeep + "'";
 
-                    //get ID for deleted vendor
-                    SQL = "select VenSysNbr from vendor where VenCode ='" + venDelete + "'";
-                    ds1.Clear();
-                    ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
-                    if (ds1.Tables[0].Rows.Count > 0)
-                        venDeleteID = int.Parse(ds1.Tables[0].Rows[0][0].ToString());
+                        ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
+                        if (ds1.Tables[0].Rows.Count > 0)
+                            venKeepID = int.Parse(ds1.Tables[0].Rows[0][0].ToString());
 
-                    ds1.Clear();
+                        //get ID for deleted vendor
+                        SQL = "select VenSysNbr from vendor where VenCode ='" + venDelete + "'";
+                        ds1.Clear();
+                        ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
+                        if (ds1.Tables[0].Rows.Count > 0)
+                            venDeleteID = int.Parse(ds1.Tables[0].Rows[0][0].ToString());
+
+                        ds1.Clear();
+
                     if (venDeleteID != 0 && venKeepID != 0)
                     {
 
@@ -201,7 +205,7 @@ namespace JurisUtilityBase
                         _jurisUtility.ExecuteNonQueryCommand(0, SQL);
                         UpdateStatus("Updated Voucher Batch Detail.", 3, 9);
 
-                        SQL = "update vennote set vnvendor==" + venKeepID + " where vnvendor=" + venDeleteID;
+                        SQL = "update vennote set vnvendor=" + venKeepID + " where vnvendor=" + venDeleteID;
 
                         _jurisUtility.ExecuteNonQueryCommand(0, SQL);
                         UpdateStatus("Updated Vendor Note.", 4, 9);
@@ -228,7 +232,7 @@ namespace JurisUtilityBase
                         ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
                         foreach (DataRow r in ds1.Tables[0].Rows)
                         {
-                            SQL = "update VenSumByPrd set VSPVouchers = " + r[2].ToString() + ", VSPPayments = " + r[3].ToString() + ", VSPDiscountsTaken = " + r[4].ToString() + " where VSPPrdYear = " + r[0].ToString() + " and V99Vendor = " + venKeepID + " and VSPPrdNbr = " + r[1].ToString();
+                            SQL = "update VenSumByPrd set VSPVouchers = " + r[2].ToString() + ", VSPPayments = " + r[3].ToString() + ", VSPDiscountsTaken = " + r[4].ToString() + " where VSPPrdYear = " + r[0].ToString() + " and VSPVendor = " + venKeepID + " and VSPPrdNbr = " + r[1].ToString();
                             _jurisUtility.ExecuteNonQueryCommand(0, SQL);
                         }
 
@@ -238,6 +242,10 @@ namespace JurisUtilityBase
 
                         //delete records
                         SQL = "delete from ven1099 where V99Vendor = " + venDeleteID;
+
+                        _jurisUtility.ExecuteNonQueryCommand(0, SQL);
+
+                        SQL = "delete from VenSumbyprd where VSPVendor = " + venDeleteID;
 
                         _jurisUtility.ExecuteNonQueryCommand(0, SQL);
 
