@@ -216,7 +216,7 @@ namespace JurisUtilityBase
                         UpdateStatus("Updated Mat Disb History.", 5, 9);
 
                         //ven1099
-                        SQL = "SELECT  [V99Year] ,cast(sum([V99AmountPaid]) as decimal(20,2)) as paid ,cast(sum(V99SupplementAmount) as decimal(20,2)) as supp FROM [Juris8041300].[dbo].[Ven1099] where V99Vendor = " + venDeleteID + " or V99Vendor = " + venKeepID + " group by V99Year";
+                        SQL = "SELECT  [V99Year] ,cast(sum([V99AmountPaid]) as decimal(20,2)) as paid ,cast(sum(V99SupplementAmount) as decimal(20,2)) as supp FROM [Ven1099] where V99Vendor = " + venDeleteID + " or V99Vendor = " + venKeepID + " group by V99Year";
 
                         ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
                         foreach (DataRow r in ds1.Tables[0].Rows)
@@ -226,7 +226,7 @@ namespace JurisUtilityBase
                         }
 
                         //vensumbyprd
-                        SQL = "SELECT  [VSPPrdYear],[VSPPrdNbr],cast(sum([VSPVouchers]) as decimal(20,2)) as vouch,cast(sum([VSPPayments]) as decimal(20,2)) as pymt,cast(sum([VSPDiscountsTaken]) as decimal(20,2)) as disc FROM [Juris8041300].[dbo].[VenSumByPrd] where VSPVendor = " + venKeepID + " or VSPVendor = " + venDeleteID + " group by VSPPrdYear, VSPPrdNbr order by VSPPrdYear, VSPPrdNbr";
+                        SQL = "SELECT  [VSPPrdYear],[VSPPrdNbr],cast(sum([VSPVouchers]) as decimal(20,2)) as vouch,cast(sum([VSPPayments]) as decimal(20,2)) as pymt,cast(sum([VSPDiscountsTaken]) as decimal(20,2)) as disc FROM [VenSumByPrd] where VSPVendor = " + venKeepID + " or VSPVendor = " + venDeleteID + " group by VSPPrdYear, VSPPrdNbr order by VSPPrdYear, VSPPrdNbr";
                         ds1.Clear();
 
                         ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
