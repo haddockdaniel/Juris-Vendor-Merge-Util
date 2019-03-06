@@ -37,6 +37,8 @@ namespace JurisUtilityBase
 
         private string venDelete = "";
 
+        private List<VendorCodeToID> venList = new List<VendorCodeToID>();
+
         #endregion
 
         #region Constructor
@@ -95,12 +97,12 @@ namespace JurisUtilityBase
 
             string TkprIndex;
             cbKeep.ClearItems();
-            string SQLTkpr = "select vencode + space(15 - len(vencode)) + venname as vendor from vendor";
+            string SQLTkpr = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
             if (includeInactive)
-                SQLTkpr = SQLTkpr + " where VenActive='Y' order by vencode";
+                SQLTkpr = SQLTkpr + " where VenActive='Y' order by venname";
             else
                 if (includeInactive)
-                    SQLTkpr = SQLTkpr + " order by vencode";
+                    SQLTkpr = SQLTkpr + " order by venname";
             DataSet myRSTkpr = _jurisUtility.RecordsetFromSQL(SQLTkpr);
 
             if (myRSTkpr.Tables[0].Rows.Count == 0)
@@ -114,6 +116,10 @@ namespace JurisUtilityBase
                     {
                         TkprIndex = dr["vendor"].ToString();
                         cbKeep.Items.Add(TkprIndex);
+                        VendorCodeToID v = new VendorCodeToID(); //keep a list of all formatted codes and their associated ids
+                        v.code = dr["vencode"].ToString();
+                        v.ID = dr["ID"].ToString();
+                        venList.Add(v);
                     }
                 }
 
@@ -121,12 +127,12 @@ namespace JurisUtilityBase
 
             string TkprIndex2;
             cbDelete.ClearItems();
-            string SQLTkpr2 = "select vencode + space(15 - len(vencode)) + venname as vendor from vendor";
+            string SQLTkpr2 = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor from vendor";
             if (includeInactive)
-                SQLTkpr2 = SQLTkpr2 + " where VenActive='Y' order by vencode";
+                SQLTkpr2 = SQLTkpr2 + " where VenActive='Y' order by venname";
             else
                 if (includeInactive)
-                    SQLTkpr2 = SQLTkpr2 + " order by vencode";
+                    SQLTkpr2 = SQLTkpr2 + " order by venname";
             DataSet myRSTkpr2 = _jurisUtility.RecordsetFromSQL(SQLTkpr2);
 
 
@@ -167,28 +173,15 @@ namespace JurisUtilityBase
                                 "vendor: " + venKeep + ". Vendor: " + venDelete + " will be deleted. Continue?", "Confirmation" ,MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (rs == System.Windows.Forms.DialogResult.Yes)
                 {
-                    int venKeepID = 0;
-                    int venDeleteID = 0;
                     DataSet ds1 = new DataSet();
                     String SQL = "";
-                        //get ID for kept vendor
-                        SQL = "select VenSysNbr from vendor where VenCode ='" + venKeep + "'";
 
-                        ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
-                        if (ds1.Tables[0].Rows.Count > 0)
-                            venKeepID = int.Parse(ds1.Tables[0].Rows[0][0].ToString());
 
-                        //get ID for deleted vendor
-                        SQL = "select VenSysNbr from vendor where VenCode ='" + venDelete + "'";
-                        ds1.Clear();
-                        ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
-                        if (ds1.Tables[0].Rows.Count > 0)
-                            venDeleteID = int.Parse(ds1.Tables[0].Rows[0][0].ToString());
-
-                        ds1.Clear();
-
-                    if (venDeleteID != 0 && venKeepID != 0)
-                    {
+                    //we need ot find those ids in the list based on the formatted code
+                    var id = venList.First(a => a.code == venKeep);
+                    var id1 = venList.First(a => a.code == venDelete);
+                    string venKeepID = id.ID;
+                    string venDeleteID = id1.ID;
 
                         SQL = "update voucher set vchvendor=" + venKeepID + " where vchvendor=" + venDeleteID;
 
@@ -266,11 +259,11 @@ namespace JurisUtilityBase
 
                         venDelete = "";
                         venKeep = "";
+                        venList.Clear();
+                        cbKeep.SelectedIndex = -1;
+                        cbDelete.SelectedIndex = -1;
 
                         MessageBox.Show("The process is complete", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.None);
-                    }
-                    else
-                        MessageBox.Show("Invalid Vendor ID", "SQL error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
