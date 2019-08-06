@@ -213,20 +213,36 @@ namespace JurisUtilityBase
 
                         ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
                         foreach (DataRow r in ds1.Tables[0].Rows)
-                        {
-                            SQL = "update Ven1099 set V99AmountPaid = " + r[1].ToString() + ", V99SupplementAmount = " + r[2].ToString() + " where V99Year = " + r[0].ToString() + " and V99Vendor = " + venKeepID;
-                            _jurisUtility.ExecuteNonQueryCommand(0, SQL);
-                        }
+                        
+                           { SQL = "update Ven1099 set V99AmountPaid = " + r[1].ToString() + ", V99SupplementAmount = " + r[2].ToString() + " where V99Year = " + r[0].ToString() + " and V99Vendor = " + venKeepID;
+                            _jurisUtility.ExecuteNonQueryCommand(0, SQL); }
+                      
+
+                        //Update ven1099 settings based of selection
+                        if (radioButton4.Checked== true)
+                    { SQL = "update vendor set ven1099Box=del1099 from (select ven1099Box as del1099, vensysnbr as OldVen from vendor where vensysnbr=" + venDeleteID + ")DV where vensysnbr= " + venKeepID ;
+                        _jurisUtility.ExecuteNonQueryCommand(0, SQL);
+                    }
+                    
 
                         //vensumbyprd
-                        SQL = "SELECT  [VSPPrdYear],[VSPPrdNbr],cast(sum([VSPVouchers]) as decimal(20,2)) as vouch,cast(sum([VSPPayments]) as decimal(20,2)) as pymt,cast(sum([VSPDiscountsTaken]) as decimal(20,2)) as disc FROM [VenSumByPrd] where VSPVendor = " + venDeleteID + " group by VSPPrdYear, VSPPrdNbr order by VSPPrdYear, VSPPrdNbr";
+                        SQL = "SELECT  [VSPPrdYear],[VSPPrdNbr],cast(sum([VSPVouchers]) as decimal(20,2)) as vouch,cast(sum([VSPPayments]) as decimal(20,2)) as pymt,cast(sum([VSPDiscountsTaken]) as decimal(20,2)) as disc FROM [VenSumByPrd] where VSPVendor = " + venDeleteID + " or vspvendor=" + venKeepID + " group by VSPPrdYear, VSPPrdNbr order by VSPPrdYear, VSPPrdNbr";
                         ds1.Clear();
 
                         ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
                         foreach (DataRow r in ds1.Tables[0].Rows)
                         {
-                            SQL = "update VenSumByPrd set VSPVouchers = " + r["vouch"].ToString() + ", VSPPayments = " + r["pymt"].ToString() + ", VSPDiscountsTaken = " + r["disc"].ToString() + " where VSPPrdYear = " + r["VSPPrdYear"].ToString() + " and VSPVendor = " + venKeepID + " and VSPPrdNbr = " + r["VSPPrdNbr"].ToString() + "where VSPVendor = " + venDeleteID;
+                        SQL = "SELECT vspprdyear, vspprdnbr, vspvendor from VenSumByPrd where VSPPrdYear = " + r["VSPPrdYear"].ToString() + " and VSPVendor = " + venKeepID + " and VSPPrdNbr = " + r["VSPPrdNbr"].ToString();
+                          DataSet d2 = _jurisUtility.ExecuteSqlCommand(0, SQL);
+                        if (d2.Tables[0].Rows.Count == 0)
+                        { SQL = "Insert into VenSumbyPrd(vspvendor, vspprdyear, vspprdnbr, vspvouchers, vsppayments, vspdiscountstaken) values(" + venKeepID + "," + r["VSPPrdYear"].ToString() + "," + r["VSPPrdNbr"].ToString() + "," + r["vouch"].ToString() + "," + r["pymt"].ToString() + "," + r["disc"].ToString() + ")";
                             _jurisUtility.ExecuteNonQueryCommand(0, SQL);
+                        }
+                        else
+                        {
+                            SQL = "update VenSumByPrd set VSPVouchers = " + r["vouch"].ToString() + ", VSPPayments = " + r["pymt"].ToString() + ", VSPDiscountsTaken = " + r["disc"].ToString() + " where VSPPrdYear = " + r["VSPPrdYear"].ToString() + " and VSPVendor = " + venKeepID + " and VSPPrdNbr = " + r["VSPPrdNbr"].ToString() ;
+                            _jurisUtility.ExecuteNonQueryCommand(0, SQL);
+                        }
                         }
 
                         UpdateStatus("Updated 1099 and Vendor Sum By Period.", 6, 9);
@@ -453,6 +469,9 @@ namespace JurisUtilityBase
             cbKeep.Enabled = true;
         }
 
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
