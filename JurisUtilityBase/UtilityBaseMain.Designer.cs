@@ -111,7 +111,8 @@
             this.labelDescription.Size = new System.Drawing.Size(221, 69);
             this.labelDescription.TabIndex = 1;
             this.labelDescription.Text = "Merges 2 vendors and their appropriate vouchers, batches, checks, notes and matte" +
-    "r distributions";
+    "r distributions. If the vendors have different 1099 settings, the vendor to keep" +
+    "\'s 1009 status will be used.";
             // 
             // statusGroupBox
             // 

@@ -219,13 +219,13 @@ namespace JurisUtilityBase
                         }
 
                         //vensumbyprd
-                        SQL = "SELECT  [VSPPrdYear],[VSPPrdNbr],cast(sum([VSPVouchers]) as decimal(20,2)) as vouch,cast(sum([VSPPayments]) as decimal(20,2)) as pymt,cast(sum([VSPDiscountsTaken]) as decimal(20,2)) as disc FROM [VenSumByPrd] where VSPVendor = " + venKeepID + " or VSPVendor = " + venDeleteID + " group by VSPPrdYear, VSPPrdNbr order by VSPPrdYear, VSPPrdNbr";
+                        SQL = "SELECT  [VSPPrdYear],[VSPPrdNbr],cast(sum([VSPVouchers]) as decimal(20,2)) as vouch,cast(sum([VSPPayments]) as decimal(20,2)) as pymt,cast(sum([VSPDiscountsTaken]) as decimal(20,2)) as disc FROM [VenSumByPrd] where VSPVendor = " + venDeleteID + " group by VSPPrdYear, VSPPrdNbr order by VSPPrdYear, VSPPrdNbr";
                         ds1.Clear();
 
                         ds1 = _jurisUtility.ExecuteSqlCommand(0, SQL);
                         foreach (DataRow r in ds1.Tables[0].Rows)
                         {
-                            SQL = "update VenSumByPrd set VSPVouchers = " + r[2].ToString() + ", VSPPayments = " + r[3].ToString() + ", VSPDiscountsTaken = " + r[4].ToString() + " where VSPPrdYear = " + r[0].ToString() + " and VSPVendor = " + venKeepID + " and VSPPrdNbr = " + r[1].ToString();
+                            SQL = "update VenSumByPrd set VSPVouchers = " + r["vouch"].ToString() + ", VSPPayments = " + r["pymt"].ToString() + ", VSPDiscountsTaken = " + r["disc"].ToString() + " where VSPPrdYear = " + r["VSPPrdYear"].ToString() + " and VSPVendor = " + venKeepID + " and VSPPrdNbr = " + r["VSPPrdNbr"].ToString() + "where VSPVendor = " + venDeleteID;
                             _jurisUtility.ExecuteNonQueryCommand(0, SQL);
                         }
 
