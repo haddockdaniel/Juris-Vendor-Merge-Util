@@ -42,8 +42,6 @@
             this.OpenFileDialogOpen = new System.Windows.Forms.OpenFileDialog();
             this.buttonReport = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.cbDelete = new System.Windows.Forms.ComboBox();
             this.cbKeep = new System.Windows.Forms.ComboBox();
             this.radioButtonInactive = new System.Windows.Forms.RadioButton();
@@ -52,12 +50,19 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.radioButtonKeep = new System.Windows.Forms.RadioButton();
+            this.radioButtonSCYes = new System.Windows.Forms.RadioButton();
+            this.radioButtonSCNo = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.JurisLogoImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LexisNexisLogoPictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.statusGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // JurisLogoImageBox
@@ -85,9 +90,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 449);
+            this.statusStrip.Location = new System.Drawing.Point(0, 487);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(616, 22);
+            this.statusStrip.Size = new System.Drawing.Size(620, 22);
             this.statusStrip.TabIndex = 2;
             // 
             // toolStripStatusLabel
@@ -164,7 +169,7 @@
             this.buttonReport.BackColor = System.Drawing.Color.LightGray;
             this.buttonReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonReport.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.buttonReport.Location = new System.Drawing.Point(121, 398);
+            this.buttonReport.Location = new System.Drawing.Point(121, 439);
             this.buttonReport.Name = "buttonReport";
             this.buttonReport.Size = new System.Drawing.Size(148, 38);
             this.buttonReport.TabIndex = 16;
@@ -178,7 +183,7 @@
             this.button1.Enabled = false;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.button1.Location = new System.Drawing.Point(454, 398);
+            this.button1.Location = new System.Drawing.Point(437, 439);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(148, 38);
             this.button1.TabIndex = 17;
@@ -186,52 +191,36 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox3
-            // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.ForeColor = System.Drawing.Color.Navy;
-            this.textBox3.Location = new System.Drawing.Point(118, 330);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(299, 22);
-            this.textBox3.TabIndex = 21;
-            this.textBox3.Text = "Select vendor to merge (will be removed)";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.ForeColor = System.Drawing.Color.Navy;
-            this.textBox2.Location = new System.Drawing.Point(118, 260);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(171, 22);
-            this.textBox2.TabIndex = 20;
-            this.textBox2.Text = "Select Vendor to keep";
-            // 
             // cbDelete
             // 
+            this.cbDelete.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDelete.Enabled = false;
             this.cbDelete.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold);
             this.cbDelete.FormattingEnabled = true;
-            this.cbDelete.Location = new System.Drawing.Point(118, 358);
+            this.cbDelete.Location = new System.Drawing.Point(118, 402);
             this.cbDelete.Name = "cbDelete";
             this.cbDelete.Size = new System.Drawing.Size(473, 23);
+            this.cbDelete.Sorted = true;
             this.cbDelete.TabIndex = 19;
             this.cbDelete.SelectedIndexChanged += new System.EventHandler(this.cbDelete_SelectedIndexChanged);
             // 
             // cbKeep
             // 
+            this.cbKeep.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbKeep.Enabled = false;
             this.cbKeep.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbKeep.FormattingEnabled = true;
-            this.cbKeep.Location = new System.Drawing.Point(116, 288);
+            this.cbKeep.Location = new System.Drawing.Point(116, 352);
             this.cbKeep.Name = "cbKeep";
             this.cbKeep.Size = new System.Drawing.Size(475, 23);
+            this.cbKeep.Sorted = true;
             this.cbKeep.TabIndex = 18;
             this.cbKeep.SelectedIndexChanged += new System.EventHandler(this.cbKeep_SelectedIndexChanged);
             // 
             // radioButtonInactive
             // 
             this.radioButtonInactive.AutoSize = true;
-            this.radioButtonInactive.Location = new System.Drawing.Point(27, 21);
+            this.radioButtonInactive.Location = new System.Drawing.Point(21, 21);
             this.radioButtonInactive.Name = "radioButtonInactive";
             this.radioButtonInactive.Size = new System.Drawing.Size(196, 20);
             this.radioButtonInactive.TabIndex = 22;
@@ -243,7 +232,7 @@
             // radioButtonActiveOnly
             // 
             this.radioButtonActiveOnly.AutoSize = true;
-            this.radioButtonActiveOnly.Location = new System.Drawing.Point(27, 47);
+            this.radioButtonActiveOnly.Location = new System.Drawing.Point(253, 21);
             this.radioButtonActiveOnly.Name = "radioButtonActiveOnly";
             this.radioButtonActiveOnly.Size = new System.Drawing.Size(220, 20);
             this.radioButtonActiveOnly.TabIndex = 23;
@@ -258,9 +247,9 @@
             this.groupBox1.Controls.Add(this.radioButtonInactive);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.groupBox1.ForeColor = System.Drawing.Color.Navy;
-            this.groupBox1.Location = new System.Drawing.Point(121, 166);
+            this.groupBox1.Location = new System.Drawing.Point(121, 154);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(296, 79);
+            this.groupBox1.Size = new System.Drawing.Size(481, 49);
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vendor Options";
@@ -271,9 +260,9 @@
             this.groupBox2.Controls.Add(this.radioButton4);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.groupBox2.ForeColor = System.Drawing.Color.Navy;
-            this.groupBox2.Location = new System.Drawing.Point(423, 166);
+            this.groupBox2.Location = new System.Drawing.Point(121, 266);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(179, 79);
+            this.groupBox2.Size = new System.Drawing.Size(481, 53);
             this.groupBox2.TabIndex = 27;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "1099 Options to use";
@@ -282,7 +271,7 @@
             // 
             this.radioButton3.AutoSize = true;
             this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(12, 24);
+            this.radioButton3.Location = new System.Drawing.Point(21, 21);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(133, 20);
             this.radioButton3.TabIndex = 23;
@@ -294,12 +283,80 @@
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(12, 47);
+            this.radioButton4.Location = new System.Drawing.Point(253, 21);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(141, 20);
             this.radioButton4.TabIndex = 22;
             this.radioButton4.Text = "Vendor to Merge";
             this.radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.Navy;
+            this.label1.Location = new System.Drawing.Point(118, 333);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(162, 16);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Select Vendor to keep";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.Color.Navy;
+            this.label2.Location = new System.Drawing.Point(118, 383);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(292, 16);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "Select vendor to merge (will be removed)";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.radioButtonSCNo);
+            this.groupBox3.Controls.Add(this.radioButtonSCYes);
+            this.groupBox3.Controls.Add(this.radioButtonKeep);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
+            this.groupBox3.ForeColor = System.Drawing.Color.Navy;
+            this.groupBox3.Location = new System.Drawing.Point(121, 209);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(481, 51);
+            this.groupBox3.TabIndex = 30;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Separate Checks?";
+            // 
+            // radioButtonKeep
+            // 
+            this.radioButtonKeep.AutoSize = true;
+            this.radioButtonKeep.Checked = true;
+            this.radioButtonKeep.Location = new System.Drawing.Point(21, 21);
+            this.radioButtonKeep.Name = "radioButtonKeep";
+            this.radioButtonKeep.Size = new System.Drawing.Size(169, 20);
+            this.radioButtonKeep.TabIndex = 23;
+            this.radioButtonKeep.TabStop = true;
+            this.radioButtonKeep.Text = "Keep existing setting";
+            this.radioButtonKeep.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSCYes
+            // 
+            this.radioButtonSCYes.AutoSize = true;
+            this.radioButtonSCYes.Location = new System.Drawing.Point(200, 21);
+            this.radioButtonSCYes.Name = "radioButtonSCYes";
+            this.radioButtonSCYes.Size = new System.Drawing.Size(127, 20);
+            this.radioButtonSCYes.TabIndex = 24;
+            this.radioButtonSCYes.Text = "Change to Yes";
+            this.radioButtonSCYes.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSCNo
+            // 
+            this.radioButtonSCNo.AutoSize = true;
+            this.radioButtonSCNo.Location = new System.Drawing.Point(345, 21);
+            this.radioButtonSCNo.Name = "radioButtonSCNo";
+            this.radioButtonSCNo.Size = new System.Drawing.Size(120, 20);
+            this.radioButtonSCNo.TabIndex = 25;
+            this.radioButtonSCNo.Text = "Change to No";
+            this.radioButtonSCNo.UseVisualStyleBackColor = true;
             // 
             // UtilityBaseMain
             // 
@@ -307,11 +364,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(616, 471);
+            this.ClientSize = new System.Drawing.Size(620, 509);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.cbDelete);
             this.Controls.Add(this.cbKeep);
             this.Controls.Add(this.button1);
@@ -341,6 +399,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,8 +421,6 @@
         private System.Windows.Forms.OpenFileDialog OpenFileDialogOpen;
         private System.Windows.Forms.Button buttonReport;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ComboBox cbDelete;
         private System.Windows.Forms.ComboBox cbKeep;
         private System.Windows.Forms.RadioButton radioButtonInactive;
@@ -371,6 +429,12 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.RadioButton radioButtonSCNo;
+        private System.Windows.Forms.RadioButton radioButtonSCYes;
+        private System.Windows.Forms.RadioButton radioButtonKeep;
     }
 }
 

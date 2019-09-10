@@ -98,11 +98,11 @@ namespace JurisUtilityBase
             string TkprIndex;
             cbKeep.ClearItems();
             string SQLTkpr = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
-            if (includeInactive)
-                SQLTkpr = SQLTkpr + " where VenActive='Y' order by venname";
+            if (!includeInactive)
+                SQLTkpr = SQLTkpr + " where VenActive='Y' order by vencode";
             else
                 if (includeInactive)
-                    SQLTkpr = SQLTkpr + " order by venname";
+                    SQLTkpr = SQLTkpr + " order by vencode";
             DataSet myRSTkpr = _jurisUtility.RecordsetFromSQL(SQLTkpr);
 
             if (myRSTkpr.Tables[0].Rows.Count == 0)
@@ -127,12 +127,12 @@ namespace JurisUtilityBase
 
             string TkprIndex2;
             cbDelete.ClearItems();
-            string SQLTkpr2 = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor from vendor";
-            if (includeInactive)
-                SQLTkpr2 = SQLTkpr2 + " where VenActive='Y' order by venname";
+            string SQLTkpr2 = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
+            if (!includeInactive)
+                SQLTkpr2 = SQLTkpr2 + " where VenActive='Y' order by vencode";
             else
                 if (includeInactive)
-                    SQLTkpr2 = SQLTkpr2 + " order by venname";
+                    SQLTkpr2 = SQLTkpr2 + " order by vencode";
             DataSet myRSTkpr2 = _jurisUtility.RecordsetFromSQL(SQLTkpr2);
 
 
@@ -183,6 +183,14 @@ namespace JurisUtilityBase
                     string venKeepID = id.ID;
                     string venDeleteID = id1.ID;
 
+                    if (!radioButtonKeep.Checked) //if they chose to force the separate check setting
+                    {
+                        if (radioButtonSCNo.Checked) //no
+                            SQL = "update vendor set VenSeparateCheck = 'N' where vensysnbr = " + venKeepID;
+                        if (radioButtonSCYes.Checked) //yes
+                            SQL = "update vendor set VenSeparateCheck = 'Y' where vensysnbr = " + venKeepID;
+
+                    }
                         SQL = "update voucher set vchvendor=" + venKeepID + " where vchvendor=" + venDeleteID;
 
                         _jurisUtility.ExecuteNonQueryCommand(0, SQL);
