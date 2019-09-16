@@ -37,6 +37,8 @@ namespace JurisUtilityBase
 
         private string venDelete = "";
 
+        private string sepChecks = "";
+
         private List<VendorCodeToID> venList = new List<VendorCodeToID>();
 
         #endregion
@@ -95,62 +97,7 @@ namespace JurisUtilityBase
             }
 
 
-            string TkprIndex;
-            cbKeep.ClearItems();
-            string SQLTkpr = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
-            if (!includeInactive)
-                SQLTkpr = SQLTkpr + " where VenActive='Y' order by vencode";
-            else
-                if (includeInactive)
-                    SQLTkpr = SQLTkpr + " order by vencode";
-            DataSet myRSTkpr = _jurisUtility.RecordsetFromSQL(SQLTkpr);
-
-            if (myRSTkpr.Tables[0].Rows.Count == 0)
-                cbKeep.SelectedIndex = 0;
-            else
-            {
-                foreach (DataTable table in myRSTkpr.Tables)
-                {
-
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        TkprIndex = dr["vendor"].ToString();
-                        cbKeep.Items.Add(TkprIndex);
-                        VendorCodeToID v = new VendorCodeToID(); //keep a list of all formatted codes and their associated ids
-                        v.code = dr["vencode"].ToString();
-                        v.ID = dr["ID"].ToString();
-                        venList.Add(v);
-                    }
-                }
-
-            }
-
-            string TkprIndex2;
-            cbDelete.ClearItems();
-            string SQLTkpr2 = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
-            if (!includeInactive)
-                SQLTkpr2 = SQLTkpr2 + " where VenActive='Y' order by vencode";
-            else
-                if (includeInactive)
-                    SQLTkpr2 = SQLTkpr2 + " order by vencode";
-            DataSet myRSTkpr2 = _jurisUtility.RecordsetFromSQL(SQLTkpr2);
-
-
-            if (myRSTkpr2.Tables[0].Rows.Count == 0)
-                cbDelete.SelectedIndex = 0;
-            else
-            {
-                foreach (DataTable table in myRSTkpr2.Tables)
-                {
-
-                    foreach (DataRow dr in table.Rows)
-                    {
-                        TkprIndex2 = dr["vendor"].ToString();
-                        cbDelete.Items.Add(TkprIndex2);
-                    }
-                }
-
-            }
+            populateDropDowns();
 
 
 
@@ -185,10 +132,11 @@ namespace JurisUtilityBase
 
                     if (!radioButtonKeep.Checked) //if they chose to force the separate check setting
                     {
-                        if (radioButtonSCNo.Checked) //no
-                            SQL = "update vendor set VenSeparateCheck = 'N' where vensysnbr = " + venKeepID;
-                        if (radioButtonSCYes.Checked) //yes
-                            SQL = "update vendor set VenSeparateCheck = 'Y' where vensysnbr = " + venKeepID;
+                        if (!string.IsNullOrEmpty(sepChecks))
+                        {
+                            SQL = "update vendor set " + sepChecks + " where vensysnbr = " + venKeepID;
+                            _jurisUtility.ExecuteNonQueryCommand(0, SQL);
+                        }
 
                     }
                         SQL = "update voucher set vchvendor=" + venKeepID + " where vchvendor=" + venDeleteID;
@@ -288,11 +236,81 @@ namespace JurisUtilityBase
                         cbDelete.SelectedIndex = -1;
 
                         MessageBox.Show("The process is complete", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.None);
+                        try
+                        {
+                            System.Environment.Exit(1);
+                        }
+                        catch (Exception ex11)
+                        {
+                            this.Close();
+                        }
                 }
             }
             else
                 MessageBox.Show("Please select a vendor from both drop downs","Selection error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void populateDropDowns()
+        {
+            string TkprIndex;
+            cbKeep.ClearItems();
+            string SQLTkpr = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
+            if (!includeInactive)
+                SQLTkpr = SQLTkpr + " where VenActive='Y' order by vencode";
+            else
+                if (includeInactive)
+                    SQLTkpr = SQLTkpr + " order by vencode";
+            DataSet myRSTkpr = _jurisUtility.RecordsetFromSQL(SQLTkpr);
+
+            if (myRSTkpr.Tables[0].Rows.Count == 0)
+                cbKeep.SelectedIndex = 0;
+            else
+            {
+                foreach (DataTable table in myRSTkpr.Tables)
+                {
+
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        TkprIndex = dr["vendor"].ToString();
+                        cbKeep.Items.Add(TkprIndex);
+                        VendorCodeToID v = new VendorCodeToID(); //keep a list of all formatted codes and their associated ids
+                        v.code = dr["vencode"].ToString();
+                        v.ID = dr["ID"].ToString();
+                        venList.Add(v);
+                    }
+                }
+
+            }
+
+            string TkprIndex2;
+            cbDelete.ClearItems();
+            string SQLTkpr2 = "select dbo.jfn_FormatVendorCode(vencode) + ' ' + venname as vendor, dbo.jfn_FormatVendorCode(vencode) as vencode, VenSysNbr as ID from vendor";
+            if (!includeInactive)
+                SQLTkpr2 = SQLTkpr2 + " where VenActive='Y' order by vencode";
+            else
+                if (includeInactive)
+                    SQLTkpr2 = SQLTkpr2 + " order by vencode";
+            DataSet myRSTkpr2 = _jurisUtility.RecordsetFromSQL(SQLTkpr2);
+
+
+            if (myRSTkpr2.Tables[0].Rows.Count == 0)
+                cbDelete.SelectedIndex = 0;
+            else
+            {
+                foreach (DataTable table in myRSTkpr2.Tables)
+                {
+
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        TkprIndex2 = dr["vendor"].ToString();
+                        cbDelete.Items.Add(TkprIndex2);
+                    }
+                }
+
+            }
+        }
+
+
         private bool VerifyFirmName()
         {
             //    Dim SQL     As String
@@ -469,17 +487,37 @@ namespace JurisUtilityBase
         {
             includeInactive = false;
             cbKeep.Enabled = true;
+            populateDropDowns();
         }
 
         private void radioButtonInactive_CheckedChanged(object sender, EventArgs e)
         {
             includeInactive = true;
             cbKeep.Enabled = true;
+            populateDropDowns();
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void radioButtonSCYes_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonSCYes.Checked)
+                sepChecks = " , VenSeparateCheck = 'Y' ";
+        }
+
+        private void radioButtonSCNo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonSCNo.Checked)
+                sepChecks = " , VenSeparateCheck = 'N' ";
+        }
+
+        private void radioButtonKeep_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonKeep.Checked)
+                sepChecks = "";
         }
     }
 }

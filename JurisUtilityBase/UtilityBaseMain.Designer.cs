@@ -53,9 +53,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButtonKeep = new System.Windows.Forms.RadioButton();
-            this.radioButtonSCYes = new System.Windows.Forms.RadioButton();
             this.radioButtonSCNo = new System.Windows.Forms.RadioButton();
+            this.radioButtonSCYes = new System.Windows.Forms.RadioButton();
+            this.radioButtonKeep = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.JurisLogoImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LexisNexisLogoPictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
@@ -326,6 +326,28 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Separate Checks?";
             // 
+            // radioButtonSCNo
+            // 
+            this.radioButtonSCNo.AutoSize = true;
+            this.radioButtonSCNo.Location = new System.Drawing.Point(345, 21);
+            this.radioButtonSCNo.Name = "radioButtonSCNo";
+            this.radioButtonSCNo.Size = new System.Drawing.Size(120, 20);
+            this.radioButtonSCNo.TabIndex = 25;
+            this.radioButtonSCNo.Text = "Change to No";
+            this.radioButtonSCNo.UseVisualStyleBackColor = true;
+            this.radioButtonSCNo.CheckedChanged += new System.EventHandler(this.radioButtonSCNo_CheckedChanged);
+            // 
+            // radioButtonSCYes
+            // 
+            this.radioButtonSCYes.AutoSize = true;
+            this.radioButtonSCYes.Location = new System.Drawing.Point(200, 21);
+            this.radioButtonSCYes.Name = "radioButtonSCYes";
+            this.radioButtonSCYes.Size = new System.Drawing.Size(127, 20);
+            this.radioButtonSCYes.TabIndex = 24;
+            this.radioButtonSCYes.Text = "Change to Yes";
+            this.radioButtonSCYes.UseVisualStyleBackColor = true;
+            this.radioButtonSCYes.CheckedChanged += new System.EventHandler(this.radioButtonSCYes_CheckedChanged);
+            // 
             // radioButtonKeep
             // 
             this.radioButtonKeep.AutoSize = true;
@@ -337,26 +359,7 @@
             this.radioButtonKeep.TabStop = true;
             this.radioButtonKeep.Text = "Keep existing setting";
             this.radioButtonKeep.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonSCYes
-            // 
-            this.radioButtonSCYes.AutoSize = true;
-            this.radioButtonSCYes.Location = new System.Drawing.Point(200, 21);
-            this.radioButtonSCYes.Name = "radioButtonSCYes";
-            this.radioButtonSCYes.Size = new System.Drawing.Size(127, 20);
-            this.radioButtonSCYes.TabIndex = 24;
-            this.radioButtonSCYes.Text = "Change to Yes";
-            this.radioButtonSCYes.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonSCNo
-            // 
-            this.radioButtonSCNo.AutoSize = true;
-            this.radioButtonSCNo.Location = new System.Drawing.Point(345, 21);
-            this.radioButtonSCNo.Name = "radioButtonSCNo";
-            this.radioButtonSCNo.Size = new System.Drawing.Size(120, 20);
-            this.radioButtonSCNo.TabIndex = 25;
-            this.radioButtonSCNo.Text = "Change to No";
-            this.radioButtonSCNo.UseVisualStyleBackColor = true;
+            this.radioButtonKeep.CheckedChanged += new System.EventHandler(this.radioButtonKeep_CheckedChanged);
             // 
             // UtilityBaseMain
             // 
