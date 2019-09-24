@@ -127,7 +127,7 @@ namespace JurisUtilityBase
 
         public int ExecuteNonQuery(int connection, string sql)
         {
-            return _connections[connection].ExecuteNonQuery(sql);
+                return _connections[connection].ExecuteNonQuery(sql);
         }
 
         public DataSet RecordsetFromSQL(string sql)
@@ -177,8 +177,10 @@ namespace JurisUtilityBase
 
         public int ExecuteNonQueryCommand(int command, string sql)
         {
-            _commands[command].CommandText = sql;
-            return _commands[command].ExecuteNonQuery();
+
+                _commands[command].CommandText = sql;
+                return _commands[command].ExecuteNonQuery();
+
         }
 
         #endregion

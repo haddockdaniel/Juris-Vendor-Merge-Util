@@ -505,13 +505,13 @@ namespace JurisUtilityBase
         private void radioButtonSCYes_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonSCYes.Checked)
-                sepChecks = " , VenSeparateCheck = 'Y' ";
+                sepChecks = " VenSeparateCheck = 'Y' ";
         }
 
         private void radioButtonSCNo_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonSCNo.Checked)
-                sepChecks = " , VenSeparateCheck = 'N' ";
+                sepChecks = " VenSeparateCheck = 'N' ";
         }
 
         private void radioButtonKeep_CheckedChanged(object sender, EventArgs e)
